@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="Prolog.View.UserView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:Prolog.View"
+    xmlns:localVM="clr-namespace:Prolog.ViewModel"
+    mc:Ignorable="d" 
+    d:DesignHeight="650" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <localVM:UsersViewModel x:Key="localVM"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <localVM:UsersViewModel/>
+    </UserControl.DataContext>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!--<DataGrid Margin="5" x:Name="therapistsSQLTable" ItemsSource="{Binding UsersList }" SelectedItem="{Binding SelectedRow}" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Left">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Numer" Binding="{Binding Path='IDUser', Mode=TwoWay}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Login" Binding="{Binding Path='NameUser', Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Prawa użytkownika" Binding="{Binding Path='TypeUser', Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Imię" Binding="{Binding Path='FirstNameUser', Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nazwisko" Binding="{Binding Path='LastNameUser', Mode=TwoWay}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>-->
+        <!--<DockPanel Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" Background="AliceBlue">
+            <Grid>
+                --><!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>--><!--
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="120"/>
+                </Grid.RowDefinitions>
+                --><!--<Button x:Name="updatTherapist" Command="{Binding updateTherapistCommand}" IsEnabled="{Binding IsSelected}" Content="Edytuj pacjenta" Grid.Column="0"   Grid.Row="1"/>
+                <Button x:Name="creatTherapist" Command="{Binding addTherapistCommand}" IsEnabled="True" Content="Dodaj pacjenta" Grid.Column="1"   Grid.Row="1" />
+                <Button x:Name="deletTherapist" Command="{Binding deleteTherapistCommand}" IsEnabled="{Binding IsSelected}" Content="Usuń pacjenta" Grid.Column="2"   Grid.Row="1"/>--><!--
+
+                <TextBlock FontSize="24" FontWeight="Bold" Foreground="Black" Grid.Row="0" Grid.Column="0" Padding="5">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}   {1}">
+                            <Binding Path="SelectedRow.IDUser" />
+                            <Binding Path="SelectedRow.NameUser" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock FontSize="24" FontWeight="Bold" Foreground="Black" Grid.Row="1" Grid.Column="0" Padding="5">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}   {1}">
+                            <Binding Path="SelectedRow.FirstNameUser" />
+                            <Binding Path="SelectedRow.LastNameUser" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBox x:Name="firstNameEditBox" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedRow.FirstNameUser,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5,5,5,5"/>
+                <TextBox x:Name="lastNameEditBox" Grid.Row="3" Grid.Column="1" Text="{Binding SelectedLastName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5,5,5,5"/>
+                <StackPanel  Grid.Row="4" Grid.Column="0">
+                    <CheckBox Content="Administrator" IsChecked="{Binding UserIsAdmin, Mode=TwoWay}" Margin="5,0,0,0"/>
+                    <CheckBox Content="Terapeuta" IsChecked="{Binding UserIsTherapist, Mode=TwoWay}" Margin="5,0,0,0"/>
+                    <CheckBox Content="Recepcjonista" IsChecked="{Binding UserIsRecepcjonist, Mode=TwoWay}" Margin="5,0,0,0"/>
+                    <Button x:Name="changeUserRole" Content="Zmień dane" Command="{Binding Path = updateUserCommand }" Margin="5,5,5,5"/>
+                </StackPanel>
+            </Grid>
+        </DockPanel>-->
+        <StackPanel  Grid.Row="0" Grid.Column="0" Background="LightSteelBlue">
+            <Label Content="Zmień swoje dane" FontSize="22"/>
+            <Label Content="Nazwa użytkownika"/>
+            <TextBox x:Name="nameUserLabel" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedRow.FirstNameUser,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5,5,5,5"/>
+            <Label Content="Imię"/>
+            <TextBox x:Name="Imie" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedFirstName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5,5,5,5"/>
+            <Label Content="Nazwisko"/>
+            <TextBox x:Name="Nazwisko" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedLastName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5,5,5,5"/>
+            <Label Content="Hasło"/>
+            <TextBox x:Name="passwordUserLabel" Grid.Row="3" Grid.Column="1" Text="{Binding Path = SelectedRow.PasswordUser,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5,5,5,5"/>
+            <Label Content="Powtórz hasło"/>
+            <TextBox x:Name="passwordUserLabel1" Grid.Row="3" Grid.Column="1" Text="{Binding Path = SelectedRow.PasswordUser,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="5,5,5,5"/>
+
+            <!--<Label Content="Wybierz role użytkownika"/>-->
+            <!--<CheckBox Content="Administrator" IsChecked="{Binding UserIsAdminNew, Mode=TwoWay}" Margin="5,0,0,0"/>
+            <CheckBox Content="Terapeuta" IsChecked="{Binding UserIsTherapistNew, Mode=TwoWay}" Margin="5,0,0,0"/>
+            <CheckBox Content="Recepcjonista" IsChecked="{Binding UserIsRecepcjonistNew, Mode=TwoWay}" Margin="5,0,0,0"/>-->
+            <Button x:Name="changeUserRoles" Content="Dodaj użytkownika"  Margin="5,5,5,5" Command="{Binding Path = addRoleUserCommand }" />
+        </StackPanel>
+        <Button x:Name="updatePatient" IsEnabled="True" Command="{Binding updateCommand}" Content="Zmień dane" Grid.Column="0"   Grid.Row="1" Margin="5"/>
+    </Grid>
+</UserControl>
+<!--ItemsSource="{Binding Path=patientsSQLTable}"--> 

@@ -1,0 +1,309 @@
+﻿<UserControl x:Class="Prolog.View.PatientsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:Prolog.View"
+    xmlns:localVM="clr-namespace:Prolog.ViewModel"
+    xmlns:localVMDT="clr-namespace:Prolog.ViewModel"
+    mc:Ignorable="d" 
+    d:DesignHeight="800" d:DesignWidth="1200">
+    <UserControl.Resources>
+        <localVM:PatientsViewModel x:Key="localVM"/>
+
+        <Style x:Key="ListViewStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <localVMDT:PatientsViewModel/>
+    </UserControl.DataContext>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Grid  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="450"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid MinWidth="640" Grid.Column="1" >
+                    <DataGrid Margin="5,5,0,9.6" x:Name="patientsSQLTable" ItemsSource="{Binding PatientsList }" SelectedItem="{Binding SelectedRow}" SelectionMode="Single" AutoGenerateColumns="False" 
+                              CanUserAddRows="False" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Numer" Binding="{Binding Path='IDPatient', Mode=TwoWay}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="Imię" Binding="{Binding Path='FirstName', Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Nazwisko" Binding="{Binding Path='LastName', Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Data urodzenia" Binding="{Binding Path='DateOfBirth', Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Ulica" Binding="{Binding Path='Street', Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Kod" Binding="{Binding Path='ZIP', Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Miasto" Binding="{Binding Path='City', Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Terapeuta" Binding="{Binding Path='IDTherapist', Mode=TwoWay}" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <ScrollViewer  VerticalScrollBarVisibility="Visible">
+                <Grid  Name="DanePacjenta" Grid.Column="0" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0"  Background="Gray" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="../Images/man.png" Stretch="Fill" Height="30" Width="30" />
+                            <TextBlock FontSize="24" FontWeight="Bold" Foreground="White" Grid.Row="0" Grid.Column="1" Padding="5">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}   {1}">
+                                        <Binding Path="SelectedRow.FirstName" />
+                                        <Binding Path="SelectedRow.LastName" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0"  Background="WhiteSmoke" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Data urodzenia" Grid.Row="1" Grid.Column="0" FontSize="18"/>
+                            <Label Content="{Binding SelectedRow.DateOfBirth}"  Grid.Row="1" Grid.Column="1" FontWeight="Bold" FontSize="18" Padding="5"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Dane kontaktowe" Grid.Row="1" Grid.Column="1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="-150,0,0,0" />
+                            <Label Content="Adres" Grid.Row="3" Grid.Column="0" FontSize="18"/>
+                            <TextBlock FontSize="18" Grid.Row="3" Grid.Column="1" Padding="5">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1},  {2}">
+                                        <Binding Path="SelectedRow.ZIP" />
+                                        <Binding Path="SelectedRow.City" />
+                                        <Binding Path="SelectedRow.Street" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <Label Content="Telefon " Grid.Row="4" Grid.Column="0" FontSize="18"/>
+                            <Label Content="{Binding SelectedRow.Phone}"  Grid.Row="4" Grid.Column="1" FontWeight="Medium" FontSize="18" Padding="5"/>
+                            <Label Content="Email" Grid.Row="5" Grid.Column="0" FontSize="18"/>
+                            <Label Content="{Binding SelectedRow.Email}"  Grid.Row="5" Grid.Column="1" FontWeight="Medium" FontSize="18" Padding="5"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/> 
+                                <RowDefinition Height="*"/> 
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>                            
+                            <Label Content="Diagnoza" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" FontSize="24" FontWeight="Bold"/>
+                            <Grid Grid.Row="1" Grid.Column="0" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                            <!--<Grid Grid.Row="2" Grid.Column="0" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Label Content="Notatka diagnozy" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+                                <TextBlock FontSize="18" Grid.Row="3" Grid.Column="0" Padding="5">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0}">
+                                            <Binding Path="SelectedRow.ZIP" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Grid>-->
+                            <Grid Grid.Row="3" Grid.Column="0">
+                                <!--===========================================-->
+                                <!--<ListBox Grid.Column="0" ItemsSource="{Binding DiagnosisList}">
+                                    <ListBox.Resources>
+                                        <DataTemplate DataType="{x:Type localVMDT:PatientsViewModel}" >
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding DataDiagnosis}" />
+                                                <TextBlock Text="{Binding NotesDiagnosis}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.Resources>
+                                </ListBox>-->
+                                
+                                 <!--=====================================================-->
+                                    <!--<ListView.View>
+                                        <GridView >
+                                            <GridView.Columns>
+                                                <GridViewColumn 
+                                                    Header="Name" 
+                                                    DisplayMemberBinding="{Binding Path=DataDiagnosis}" />
+                                                <GridViewColumn 
+                                                    Header="Setting" 
+                                                    DisplayMemberBinding="{Binding Path=NotesDiagnosis}" />
+                                            </GridView.Columns>
+                                        </GridView>
+                                    </ListView.View>-->
+                                    
+                                    <!--<ListView.View>
+                                        <GridView>
+                                            <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Data" Width="80" DisplayMemberBinding="{Binding DataDiagnosis}" />
+                                            <GridViewColumn HeaderContainerStyle="{StaticResource ListViewStyle}" Header="Diagnoza" Width="600" DisplayMemberBinding="{Binding NotesDiagnosis}" />
+                                        </GridView>
+                                    </ListView.View>-->
+<!--<!="============================================================================">-->
+<!--=========================================-->
+                                <ListView Margin="10" ItemsSource="{Binding DiagnosisList}" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
+                                   
+                                    <ListView.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Name="AddOrder" Header="Order" Click="AddOrder_Click" />
+                                        </ContextMenu>
+                                    </ListView.ContextMenu>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,2" Width="Auto" MaxWidth="600">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding DataDiagnosis}" />
+                                                <TextBox FontSize="10" Text="{Binding NotesDiagnosis, Mode=TwoWay}" Grid.Column="1" TextWrapping="Wrap"></TextBox>
+                                                <!--<ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" />-->
+                                            </Grid>
+                                        </DataTemplate>                                        
+                                    </ListView.ItemTemplate>                                   
+                                </ListView>
+                            </Grid>                                
+                            </Grid>
+                            <Label Content="Terapia" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="0" FontSize="24" FontWeight="Bold"/>
+                            <Grid Grid.Row="5" Grid.Column="0">
+                                <ListView Margin="10" ItemsSource="{Binding TherapyList}" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
+
+                                    <ListView.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Name="AddOrder1" Header="Order" Click="AddOrder_Click" />
+                                        </ContextMenu>
+                                    </ListView.ContextMenu>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,2" Width="Auto" MaxWidth="600">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding DataTherapy}" />
+                                                <TextBox FontSize="10" Text="{Binding NotesTherapy, Mode=TwoWay}" Grid.Column="1" TextWrapping="Wrap"></TextBox>
+                                                <!--<ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" />-->
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                            <!--Tu następny grid - terapia ... sprawdzić-->
+                            <Label Content="Aktywność" HorizontalAlignment="Center" Grid.Row="6" Grid.Column="0" FontSize="24" FontWeight="Bold"/>
+                            <Grid Grid.Row="7" Grid.Column="0">
+                                <ListView Margin="10" ItemsSource="{Binding ActivityList}" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
+
+                                    <ListView.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Name="AddOrder2" Header="Order" Click="AddOrder_Click" />
+                                        </ContextMenu>
+                                    </ListView.ContextMenu>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,2" Width="Auto" MaxWidth="600">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding DataActivity}" />
+                                                <TextBox FontSize="10" Text="{Binding NotesActivity, Mode=TwoWay}" Grid.Column="1" TextWrapping="Wrap"></TextBox>
+                                                <!--<ProgressBar Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Completion}" />-->
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Grid>                       
+                </Grid>
+                    </ScrollViewer>
+            </Grid>
+        </StackPanel>
+
+        <DockPanel Grid.Row="1" Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="updatePatient" Command="{Binding updateCommand}" IsEnabled="{Binding IsSelected}" Content="Edytuj dane pacjenta" Grid.Column="0"   Grid.Row="1"/>
+                <Button x:Name="createPatient" Command="{Binding addCommand}" IsEnabled="True" Content="Dodaj dane pacjenta" Grid.Column="1"   Grid.Row="1" />
+                <Button x:Name="deletePatient" Command="{Binding deleteCommand}" IsEnabled="{Binding IsSelected}" Content="Usuń dane pacjenta" Grid.Column="2"   Grid.Row="1"/>
+                <Button x:Name="printingPatient" Click="printingPatient_Click" IsEnabled="{Binding IsSelected}" Content="Drukuj kartę pacjenta" Grid.Column="3"   Grid.Row="1"/>
+            </Grid>
+        </DockPanel>
+        <DockPanel Grid.Row="2" Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="createDiagnosis" Command="{Binding addDiagnosisCommand}" IsEnabled="{Binding IsSelected}" Content="Dodaj diagnozę" Grid.Column="0"   Grid.Row="1" />
+                <Button x:Name="createTherapy" Command="{Binding addTherapyCommand}" IsEnabled="{Binding IsSelected}" Content="Dodaj terapię" Grid.Column="1"   Grid.Row="1" />
+                <Button x:Name="createActivity" Command="{Binding addActivityCommand}"  IsEnabled="{Binding IsSelected}" Content="Dodaj aktywność" Grid.Column="2"   Grid.Row="1" />
+            </Grid>
+        </DockPanel>
+        <!--<Button x:Name="updatePatient" IsEnabled="{Binding IsSelected}" Command="{Binding updateCommand}" Content="Edytuj pacjenta" Grid.Column="2"   Grid.Row="2"/>-->
+        <!--WZÓR GRID-->
+        <Grid Grid.Row="0" Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+
+    </Grid>
+</UserControl>
+<!--ItemsSource="{Binding Path=patientsSQLTable}"--> 
